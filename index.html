@@ -948,17 +948,18 @@ function handleForm() {
   }
 
   // Envoyer vers Google Sheets
+  const payload = new FormData();
+  payload.append('prenom', prenom);
+  payload.append('tel',    tel);
+  payload.append('ville',  ville);
+  payload.append('besoin', besoin);
+  payload.append('source', 'landing-salassurance');
+
   fetch('https://script.google.com/macros/s/AKfycbyr5Ikwb0b40ZcuCFROqQW5HQKY1q_XaD485-XXE8evHC3vKoj0M5UrtECDPbei_7_u/exec', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      prenom: prenom,
-      tel:    tel,
-      ville:  ville,
-      besoin: besoin,
-      source: 'landing-salassurance'
-    })
-  }).catch(() => {}); // silencieux si erreur réseau
+    mode: 'no-cors',
+    body: payload
+  }).catch(() => {});
 
   // Ouvrir la modal
   document.getElementById('modal').classList.add('open');
