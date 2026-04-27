@@ -947,6 +947,19 @@ function handleForm() {
     document.getElementById('modal-msg').innerHTML = `Merci ${prenom} ! On vous rappelle sous 1h.<br>Ou écrivez-nous directement :`;
   }
 
+  // Envoyer vers Google Sheets
+  fetch('https://script.google.com/macros/s/AKfycbyr5Ikwb0b40ZcuCFROqQW5HQKY1q_XaD485-XXE8evHC3vKoj0M5UrtECDPbei_7_u/exec', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      prenom: prenom,
+      tel:    tel,
+      ville:  ville,
+      besoin: besoin,
+      source: 'landing-salassurance'
+    })
+  }).catch(() => {}); // silencieux si erreur réseau
+
   // Ouvrir la modal
   document.getElementById('modal').classList.add('open');
 }
